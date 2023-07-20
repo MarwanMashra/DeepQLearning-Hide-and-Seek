@@ -9,13 +9,14 @@ from src.handlers import MLPObservationHandler, MapHandler
 from src.utils.constants import *
 
 class Game:
-    def __init__(self, model_name, model_dir="models", map_name="default", map_path="maps.json"):
+    def __init__(self, model_name, model_dir="models", map_name="default", map_path="maps.json", fps=5):
         model_path = os.path.join(model_dir, model_name)
         self.model = DQN.load(os.path.join(model_path, "model.zip"))
         self.env = self._create_env(config_path=os.path.join(model_path, "config.json"))
 
         # put the environment in evaluation mode (not training)
         self.env.eval()
+        self.fps = fps
 
     def launch(self):
         obs, _ = self.env.reset()
@@ -25,7 +26,7 @@ class Game:
 
             
             # Wait for a key press (with a small delay to limit the frame rate)
-            key = cv2.waitKey(1000 // self.env.fps) & 0xFF
+            key = cv2.waitKey(1000 // self.fps) & 0xFF
 
             # Map arrow keys to actions
             
