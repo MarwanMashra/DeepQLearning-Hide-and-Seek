@@ -1,0 +1,1 @@
+{"map_path": "maps.json", "map_name": "default", "vision_range": 5, "grid_size": 12, "max_steps": 300, "render_mode": "human", "use_cache": true, "lr": 0.0001, "exp": 0.1, "log_dir": "logs", "timesteps": 10000, "progress_bar": true, "save_model": true, "save_dir": "models", "model_name": null}

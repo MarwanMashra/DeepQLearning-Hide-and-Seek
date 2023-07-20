@@ -157,10 +157,10 @@ class HideAndSeekEnv(gym.Env):
     
     def move_player(self, action):
         assert self.action_space.contains(action), f"{action} is an invalid action"
-        assert self.mode in ['test'], "Call move_player only in test mode"
-
-        self._move(self.seeker_pos, action)
-        self.visible_cells = self.get_visible_cells()
+        assert self.training == False, "You can't move the player in training mode"
+        if action in self._get_valid_actions(self.seeker_pos):
+            self._move(self.seeker_pos, action)
+            self.visible_cells = self.get_visible_cells()
     
     def step(self, action, verbose=False):
         assert self.action_space.contains(action), f"{action} is an invalid action"
@@ -170,7 +170,7 @@ class HideAndSeekEnv(gym.Env):
         reward = 0
         reward_log = {}
 
-        if self.mode == 'train':
+        if self.training:
             # seeker makes a move based on the old state
             self._move_seeker()
 
@@ -203,8 +203,9 @@ class HideAndSeekEnv(gym.Env):
 
         return self.get_state(), reward, terminated, truncated, self._get_info()
 
-    def _generate_frame(self, matrix, cell_size=50):
+    def _generate_frame(self, state, cell_size=50):
         # Calculate image size based on grid dimensions and cell size
+        matrix = state.reshape(self.grid_size, self.grid_size)
         image_size = (matrix.shape[1] * cell_size, matrix.shape[0] * cell_size)
 
         # Create a blank canvas with white background
@@ -230,12 +231,10 @@ class HideAndSeekEnv(gym.Env):
     
     def render(self):
         if self.render_mode == "human":
-            frame = self._generate_frame(self.current_state)
+            frame = self._generate_frame(self.get_state())
             cv2.imshow('Hide & Seek', frame)
-            cv2.waitKey(0)
-            cv2.destroyAllWindows()
         elif self.render_mode == "rgb_array":
-            print(self.current_state)
+            print(self.get_state())
         
     def get_best_seeker_action(self):
         return self.map_handler.get_best_seeker_action(self.seeker_pos, self.hider_pos)

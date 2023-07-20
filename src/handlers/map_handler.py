@@ -45,6 +45,9 @@ class MapHandler:
 
     def get_walls(self):
         return self.walls.copy()
+    
+    def get_grid_size(self):
+        return self.grid_size
 
     def get_visible_cells(self, seeker_pos):
         cache = self.cache['visible_cells']
