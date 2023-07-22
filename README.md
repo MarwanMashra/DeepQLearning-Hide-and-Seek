@@ -47,7 +47,7 @@ optional arguments:
   --prob_optimal_move PROB  probability of the seeker taking the optimal move (default: 0.60)
 ```
 
-Note that the default parameters are the ones used to train the [best model](models/best_model).
+Note that the default parameters are the ones used to train the [best model](models/best_model)
 
 ## How to play
 
@@ -65,7 +65,7 @@ Note that the default parameters are the ones used to train the [best model](mod
 - **Black cell :** the wall cells
 - **White cell :** the hidden cells
 
-![Game UI](images/game_ui.png)
+![Game UI](assets/game_ui.png)
 
 
 
@@ -118,7 +118,7 @@ Seeker optimal moves are computed using a **Dijkstra** algorithm to find the sho
 ### Player vision
 **Bresenham's** algorith was used to compute the visible cells by the player.For more on its implmeentation, see [vision.py](src/utils/vision.py). Here is an example of the field of view :
 
-![Bresenham's algorithm](assets/bresenham.png)
+![Bresenham's algorithm](assets/Bresenham.png)
 
 
 ### Caching
