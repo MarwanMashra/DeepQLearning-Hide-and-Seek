@@ -33,7 +33,6 @@ optional arguments:
   --map_path MAP_PATH       path to the maps JSON file (default: maps.json)
   --map_names MAP_NAMES      name of all the maps to use (default: default map1 map2 map3 map4)
   --vision_range VISION_RANGE vision range of the agent (default: 5)
-                            
   --grid_size GRID_SIZE     grid size of the map (default: 12)
   --max_steps MAX_STEPS     maximum number of steps in each episode (default: 300)
   --use_cache USE_CACHE     whether to use caching (default: True)
