@@ -32,8 +32,8 @@ python train.py [--map_path MAP_PATH] [--map_names MAP_NAME1 MAP_NAME2 MAP_NAME3
 optional arguments:
   --map_path MAP_PATH       path to the maps JSON file (default: maps.json)
   --map_names MAP_NAMES      name of all the maps to use (default: default map1 map2 map3 map4)
-  --vision_range VISION_RANGE
-                            vision range of the agent (default: 5)
+  --vision_range VISION_RANGE vision range of the agent (default: 5)
+                            
   --grid_size GRID_SIZE     grid size of the map (default: 12)
   --max_steps MAX_STEPS     maximum number of steps in each episode (default: 300)
   --use_cache USE_CACHE     whether to use caching (default: True)
@@ -42,7 +42,6 @@ optional arguments:
   --log_dir LOG_DIR         directory to save logs (default: logs)
   --timesteps TIMESTEPS     total timesteps for training (default: 500_000)
   --progress_bar PROGRESS_BAR show progress bar during training (default: True)
-                            
   --save_model SAVE_MODEL   whether to save the trained model (default: True)
   --model_dir MODEL_DIR     directory to save trained models (default: models)
   --model_name MODEL_NAME   name to give to the model (default: None)
