@@ -23,7 +23,7 @@ python play.py --model_name best_model
 
 To train the model, run the following command 
 ```
-python train.py [--map_path MAP_PATH] [--map_names MAP_NAME1 MAP_NAME2 MAP_NAME3 ...] 
+python train.py       [--map_path MAP_PATH] [--map_names MAP_NAME1 MAP_NAME2 MAP_NAME3 ...] 
                       [--grid_size GRID_SIZE] [--max_steps MAX_STEPS] [--vision_range VISION_RANGE]
                       [--use_cache USE_CACHE] [--lr LR] [--exp EXP] [--log_dir LOG_DIR]
                       [--timesteps TIMESTEPS] [--progress_bar PROGRESS_BAR] [--save_model SAVE_MODEL]
