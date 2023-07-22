@@ -65,7 +65,8 @@ Note that the default parameters are the ones used to train the [best model](mod
 - **Black cell :** the wall cells
 - **White cell :** the hidden cells
 
-![Game UI](assets/game_ui.png)
+<img src="assets/game_ui.png" width="400" height="400">
+
 
 
 
@@ -118,7 +119,7 @@ Seeker optimal moves are computed using a **Dijkstra** algorithm to find the sho
 ### Player vision
 **Bresenham's** algorith was used to compute the visible cells by the player.For more on its implmeentation, see [vision.py](src/utils/vision.py). Here is an example of the field of view :
 
-![Bresenham's algorithm](assets/Bresenham.png)
+<img src="assets/Bresenham.png" width="400" height="400">
 
 
 ### Caching
@@ -135,8 +136,6 @@ Average episode length over 500k episodes.
 <img src="assets/ep_len_mean.png" width="700" height="350">
 
 ### Demo
-
-![Demo](assets/demo.gif)
 
 <img src="assets/demo.gif" width="400" height="400">
 
