@@ -129,18 +129,16 @@ To make computation more efficient during the training, the optimal moves and vi
 ### Training curves
 
 Average reward over 500k episodes.
-![Training curves](assets/ep_rew_mean.png)
-<!-- control the size of the plots -->
 <img src="assets/ep_rew_mean.png" width="700" height="350">
 
 Average episode length over 500k episodes.
-![Training curves](assets/ep_len_mean.png)
 <img src="assets/ep_len_mean.png" width="700" height="350">
 
 ### Demo
 
 ![Demo](assets/demo.gif)
 
+<img src="assets/demo.gif" width="700" height="350">
 
 
 
