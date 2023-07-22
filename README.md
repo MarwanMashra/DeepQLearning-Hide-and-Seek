@@ -138,7 +138,7 @@ Average episode length over 500k episodes.
 
 ![Demo](assets/demo.gif)
 
-<img src="assets/demo.gif" width="700" height="350">
+<img src="assets/demo.gif" width="400" height="400">
 
 
 
