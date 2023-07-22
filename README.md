@@ -41,8 +41,8 @@ optional arguments:
   --exp EXP                 exploration rate (default: 0.1)
   --log_dir LOG_DIR         directory to save logs (default: logs)
   --timesteps TIMESTEPS     total timesteps for training (default: 500_000)
-  --progress_bar PROGRESS_BAR
-                            show progress bar during training (default: True)
+  --progress_bar PROGRESS_BAR show progress bar during training (default: True)
+                            
   --save_model SAVE_MODEL   whether to save the trained model (default: True)
   --model_dir MODEL_DIR     directory to save trained models (default: models)
   --model_name MODEL_NAME   name to give to the model (default: None)
