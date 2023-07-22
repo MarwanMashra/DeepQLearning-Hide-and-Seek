@@ -6,7 +6,7 @@ import cv2
 import time
 import math
 from stable_baselines3.common.env_checker import check_env
-
+from typing import List
 from stable_baselines3.common.evaluation import evaluate_policy
 from stable_baselines3.common.monitor import Monitor
 import random
@@ -23,11 +23,11 @@ from src.utils.constants import *
 class HideAndSeekEnv(gym.Env):
     def __init__(self, 
                  observation_handler: ObservationHandler,
-                 map_handler: MapHandler,
+                 map_handlers: List[MapHandler],
                  grid_size=12, 
                  max_steps=None,
+                 prob_optimal_move=0.60,
                  render_mode='rgb_array',
-                 fps=5,
                 ):
         super(HideAndSeekEnv, self).__init__()
 
@@ -39,12 +39,12 @@ class HideAndSeekEnv(gym.Env):
             max_steps = np.inf
 
         self.observation_handler = observation_handler
-        self.map_handler = map_handler
-
+        self.map_handlers = map_handlers
+        self.map_handler = None
         self.grid_size = grid_size
         self.max_steps = max_steps
         self.render_mode = render_mode
-        self.fps = fps
+        self.prob_optimal_move = prob_optimal_move
 
         self.seeker_pos = None
         self.hider_pos = None
@@ -63,6 +63,10 @@ class HideAndSeekEnv(gym.Env):
         self.current_eps = 0
         self.training = True
         self.current_eps = 0
+        self.alert_1 = True
+        self.alert_2 = True
+        self.alert_3 = True
+        self.curent_timestep = 0
 
         self.reset()
 
@@ -71,10 +75,6 @@ class HideAndSeekEnv(gym.Env):
     
     def eval(self):
         self.training = False
-    
-    def set_map_handler(self, map_handler):
-        self.map_handler = map_handler
-        self.reset()
 
     def get_state(self):
         return self.observation_handler.get_observation(
@@ -90,6 +90,7 @@ class HideAndSeekEnv(gym.Env):
         self.current_step = 0
         self.prev_states = np.empty((self.grid_size, self.grid_size, 0), dtype=np.uint8)
 
+        self.map_handler = random.choice(self.map_handlers)
         self.walls = self.map_handler.get_walls()
         self.seeker_pos = self.generate_seeker_pos()
         self.visible_cells = self.get_visible_cells()
@@ -166,6 +167,7 @@ class HideAndSeekEnv(gym.Env):
         assert self.action_space.contains(action), f"{action} is an invalid action"
 
         self.current_step += 1
+        self.curent_timestep += 1
 
         reward = 0
         reward_log = {}
@@ -240,12 +242,8 @@ class HideAndSeekEnv(gym.Env):
         return self.map_handler.get_best_seeker_action(self.seeker_pos, self.hider_pos)
 
     def _move_seeker(self):
-        # best_action = self.get_best_seeker_action()
-        # prob = self.current_step / self.max_steps
-        prob = 0.2
-        # if self.current_step < 10:
-        #     return
-        if np.random.binomial(1, prob):
+
+        if np.random.binomial(1, self.prob_optimal_move):
             action = self.get_best_seeker_action()
         else:
             valid_actions = self._get_valid_actions(self.seeker_pos)

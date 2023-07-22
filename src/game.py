@@ -9,10 +9,10 @@ from src.handlers import MLPObservationHandler, MapHandler
 from src.utils.constants import *
 
 class Game:
-    def __init__(self, model_name, model_dir="models", map_name="default", map_path="maps.json", fps=5):
+    def __init__(self, model_name, model_dir="models", map_name=None, map_path=None, fps=5):
         model_path = os.path.join(model_dir, model_name)
         self.model = DQN.load(os.path.join(model_path, "model.zip"))
-        self.env = self._create_env(config_path=os.path.join(model_path, "config.json"))
+        self.env = self._create_env(config_path=os.path.join(model_path, "config.json"), map_name=map_name, map_path=map_path)
 
         # put the environment in evaluation mode (not training)
         self.env.eval()
@@ -33,14 +33,14 @@ class Game:
             player_action = None
             if key == ASCII_ESC:  # 27 is the ASCII code for the 'ESC' key
                 break
-            elif key == ord('z'):  # ASCII code for the 'up' arrow key
-                player_action = UP  # Assuming action 0 corresponds to moving 'up'
-            elif key == ord('s'):  # ASCII code for the 'down' arrow key
-                player_action = DOWN  # Assuming action 1 corresponds to moving 'down'
-            elif key == ord('q'):  # ASCII code for the 'left' arrow key
-                player_action = LEFT  # Assuming action 2 corresponds to moving 'left'
-            elif key == ord('d'):  # ASCII code for the 'right' arrow key
-                player_action = RIGHT  # Assuming action 3 corresponds to moving 'right'
+            elif key == ord('z'):  
+                player_action = UP  
+            elif key == ord('s'): 
+                player_action = DOWN  
+            elif key == ord('q'): 
+                player_action = LEFT  
+            elif key == ord('d'):  
+                player_action = RIGHT  
 
             if player_action is not None:
                 agent_action, _states = self.model.predict(obs, deterministic=True)
@@ -49,25 +49,29 @@ class Game:
                 if terminated or truncated:
                     obs, _ = self.env.reset()
 
-    def _create_env(self, config_path):
+        cv2.destroyAllWindows()
+
+    def _create_env(self, config_path, map_name, map_path):
         with open(config_path, "r") as f:
             config = json.load(f)
-        observation_handler = MLPObservationHandler(grid_size=config['grid_size'])
+        if map_name is None:
+            map_name = config['map_name']
+        if map_path is None:
+            map_path = config['map_path']
         map_handler = MapHandler(
             grid_size=config['grid_size'],
             vision_range=config['vision_range'],
             use_cache=config['use_cache'],
-            json_path=config['map_path'],
-            map_name=config['map_name'],
+            json_path=map_path,
+            map_name=map_name,
         )
+        grid_size = map_handler.get_grid_size()
+        observation_handler = MLPObservationHandler(grid_size=grid_size)
         env = HideAndSeekEnv(
             observation_handler=observation_handler,
-            map_handler=map_handler,
-            grid_size=config['grid_size'],
+            map_handlers=[map_handler],
+            grid_size=grid_size,
             render_mode="human",
             max_steps=config['max_steps'],
         )
         return env
-    
-# cv2.waitKey(0)
-# cv2.destroyAllWindows()

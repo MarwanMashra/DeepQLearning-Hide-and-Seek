@@ -1,0 +1,1 @@
+{"map_path": "src/maps.json", "map_names": ["default", "map1", "map2", "map3", "map4"], "vision_range": 5, "grid_size": 12, "max_steps": 300, "use_cache": true, "lr": 0.0001, "exp": 0.1, "log_dir": "logs", "timesteps": 1000000, "progress_bar": true, "save_model": true, "model_dir": "models", "model_name": null}
