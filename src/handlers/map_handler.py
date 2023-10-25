@@ -82,6 +82,7 @@ class MapHandler:
         finder = DijkstraFinder()
         path, runs = finder.find_path(start, end, grid)
         next_cell = path[-len(path)+1]
+        next_cell = list(next_cell)
         best_move = (next_cell[1] - seeker_pos[0], next_cell[0] - seeker_pos[1])
         best_action = self._move_to_action(best_move)
         return best_action
